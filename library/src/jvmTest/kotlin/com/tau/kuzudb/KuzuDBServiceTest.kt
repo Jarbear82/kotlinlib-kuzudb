@@ -3,9 +3,6 @@ package com.tau.kuzudb
 import com.kuzudb.Connection as KuzuConnection
 import com.kuzudb.Database as KuzuDatabase
 import com.kuzudb.QueryResult as KuzuQueryResult
-import io.github.kotlin.kuzudb.scheme.EdgeSchema
-import io.github.kotlin.kuzudb.scheme.NodeSchema
-import io.github.kotlin.kuzudb.scheme.PropertyDefinition
 import org.junit.After
 import org.junit.Before
 import org.junit.Test

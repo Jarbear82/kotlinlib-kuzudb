@@ -48,7 +48,9 @@ kotlin {
             }
         }
         val androidMain by getting {
-            dependsOn(jvmMain)
+            val androidMain by getting {
+                kotlin.srcDirs += "src/jvmMain/kotlin"
+            }
 
         }
 

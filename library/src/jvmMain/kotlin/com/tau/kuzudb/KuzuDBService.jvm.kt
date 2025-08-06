@@ -2,8 +2,7 @@ package com.tau.kuzudb
 
 import com.kuzudb.DataTypeID
 import com.kuzudb.Value
-import io.github.kotlin.kuzudb.scheme.EdgeSchema
-import io.github.kotlin.kuzudb.scheme.NodeSchema
+
 
 actual class KuzuDBService {
     private var connection: KuzuDBConnection? = null
