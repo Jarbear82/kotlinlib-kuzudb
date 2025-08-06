@@ -34,8 +34,9 @@ kotlin {
         }
         val javaSharedMain by creating {
             dependsOn(commonMain)
+
         }
-        val javaSharedTest by getting {
+        val javaSharedTest by creating {
             dependencies {
                 implementation(libs.kotlin.test)
                 implementation(libs.junit)
@@ -50,6 +51,7 @@ kotlin {
             }
         }
         val jvmTest by getting {
+            dependsOn(javaSharedTest)
             dependencies {
                 implementation(libs.kotlin.test)
                 implementation(libs.junit)

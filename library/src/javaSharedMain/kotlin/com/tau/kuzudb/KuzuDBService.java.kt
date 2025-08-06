@@ -49,7 +49,11 @@ actual class KuzuDBService {
 
     actual fun insertNode(tableName: String, properties: Map<String, Any>): Boolean {
         val propertiesString = properties.entries.joinToString(", ") { (key, value) ->
-            "$key: '${value}'"
+            if (value is Number) {
+                "$key: $value"
+            } else {
+                "$key: '$value'"
+            }
         }
         val query = "CREATE (n:$tableName {$propertiesString})"
         return executeQuery(query, "insert node into '$tableName'")
