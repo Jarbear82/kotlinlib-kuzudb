@@ -8,12 +8,20 @@ actual class KuzuDBService {
     private var connection: KuzuDBConnection? = null
 
     actual fun initialize(dbPath: String) {
-        connection = KuzuDBConnection(dbPath)
-        connection?.connect()
+        try {
+            connection = KuzuDBConnection(dbPath)
+            connection?.connect()
+        } catch (e: Exception) {
+            throw KuzuException("Failed to initialize KuzuDB at path: $dbPath", e)
+        }
     }
 
     actual fun close() {
-        connection?.close()
+        try {
+            connection?.close()
+        } catch (e: Exception) {
+            throw KuzuException("Failed to close KuzuDB connection", e)
+        }
     }
 
     actual fun createNodeSchema(schema: NodeSchema) {
@@ -75,9 +83,7 @@ actual class KuzuDBService {
             println("Successfully executed query: $description")
             true
         } catch (e: Exception) {
-            println("Failed to execute query '$description': ${e.message}")
-            e.printStackTrace()
-            false
+            throw KuzuException("Failed to execute query '$description'", e)
         }
     }
 
@@ -100,8 +106,7 @@ actual class KuzuDBService {
             }
             println("Successfully executed query and parsed results: $description")
         } catch (e: Exception) {
-            println("Failed to execute query '$description': ${e.message}")
-            e.printStackTrace()
+            throw KuzuException("Failed to execute query '$description'", e)
         }
         return results
     }
