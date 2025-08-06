@@ -23,6 +23,7 @@ kotlin {
 
     sourceSets {
         val commonMain by getting {
+
             dependencies {
                 implementation(libs.kuzu)
             }
@@ -31,14 +32,24 @@ kotlin {
             dependencies {
                 implementation(libs.kotlin.test)
             }
+
         }
-        val jvmMain by creating {
+        val jvmMain by getting {
             dependencies {
                 // Add jvm-specific dependencies here
             }
         }
+        val jvmTest by getting {
+            dependencies {
+                implementation(libs.kotlin.test)
+                implementation(libs.junit)
+                implementation(libs.mockito.core)
+                implementation(libs.mockito.kotlin)
+            }
+        }
         val androidMain by getting {
             dependsOn(jvmMain)
+
         }
 
     }
@@ -57,6 +68,7 @@ android {
     sourceSets {
         getByName("main") {
             java.srcDirs("src/javaMain/kotlin")
+
         }
     }
 }
@@ -79,6 +91,7 @@ mavenPublishing {
                 name = "The Apache License, Version 2.0"
                 url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
                 distribution = "repo"
+
             }
         }
         developers {
@@ -86,6 +99,7 @@ mavenPublishing {
                 id = "jarbear82"
                 name = "Jared медведь"
                 url = "https://github.com/jarbear82/"
+
             }
         }
         scm {
