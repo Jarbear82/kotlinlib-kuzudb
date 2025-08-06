@@ -20,15 +20,11 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
-    linuxX64()
 
     sourceSets {
         val commonMain by getting {
             dependencies {
-                //put your multiplatform dependencies here
+                implementation(libs.kuzu)
             }
         }
         val commonTest by getting {
@@ -65,9 +61,9 @@ mavenPublishing {
         url = "https://github.com/kotlin/multiplatform-library-template/"
         licenses {
             license {
-                name = "XXX"
-                url = "YYY"
-                distribution = "ZZZ"
+                name = "The Apache License, Version 2.0"
+                url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                distribution = "repo"
             }
         }
         developers {
@@ -78,9 +74,9 @@ mavenPublishing {
             }
         }
         scm {
-            url = "XXX"
-            connection = "YYY"
-            developerConnection = "ZZZ"
+            url = "https://github.com/kotlin/multiplatform-library-template/"
+            connection = "scm:git:git://github.com/kotlin/multiplatform-library-template.git"
+            developerConnection = "scm:git:ssh://git@github.com/kotlin/multiplatform-library-template.git"
         }
     }
 }

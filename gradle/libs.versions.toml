@@ -3,9 +3,11 @@ agp = "8.5.2"
 kotlin = "2.1.10"
 android-minSdk = "24"
 android-compileSdk = "34"
+kuzu = "0.11.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kuzu = { module = "com.kuzudb:kuzu", version.ref = "kuzu" }
 
 [plugins]
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
