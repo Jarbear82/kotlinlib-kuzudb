@@ -23,7 +23,6 @@ kotlin {
 
     sourceSets {
         val commonMain by getting {
-
             dependencies {
                 implementation(libs.kuzu)
             }
@@ -32,9 +31,12 @@ kotlin {
             dependencies {
                 implementation(libs.kotlin.test)
             }
-
+        }
+        val javaSharedMain by creating {
+            dependsOn(commonMain)
         }
         val jvmMain by getting {
+            dependsOn(javaSharedMain)
             dependencies {
                 // Add jvm-specific dependencies here
             }
@@ -48,12 +50,8 @@ kotlin {
             }
         }
         val androidMain by getting {
-            val androidMain by getting {
-                kotlin.srcDirs += "src/jvmMain/kotlin"
-            }
-
+            dependsOn(javaSharedMain)
         }
-
     }
 }
 
@@ -67,14 +65,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    sourceSets {
-        getByName("main") {
-            java.srcDirs("src/javaMain/kotlin")
-
-        }
-    }
 }
-
 
 mavenPublishing {
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
@@ -93,15 +84,13 @@ mavenPublishing {
                 name = "The Apache License, Version 2.0"
                 url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
                 distribution = "repo"
-
             }
         }
         developers {
             developer {
                 id = "jarbear82"
-                name = "Jared медведь"
+                name = "Jarom Anderson"
                 url = "https://github.com/jarbear82/"
-
             }
         }
         scm {
