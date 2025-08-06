@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.vanniktech.mavenPublish)
 }
 
-group = "io.github.kotlin"
+group = "io.github.jarbear82"
 version = "1.0.0"
 
 kotlin {
@@ -32,11 +32,20 @@ kotlin {
                 implementation(libs.kotlin.test)
             }
         }
+        val jvmMain by creating {
+            dependencies {
+                // Add jvm-specific dependencies here
+            }
+        }
+        val androidMain by getting {
+            dependsOn(jvmMain)
+        }
+
     }
 }
 
 android {
-    namespace = "org.jetbrains.kotlinx.multiplatform.library.template"
+    namespace = "com.tau.kuzudb"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
@@ -45,20 +54,26 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    sourceSets {
+        getByName("main") {
+            java.srcDirs("src/javaMain/kotlin")
+        }
+    }
 }
+
 
 mavenPublishing {
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
 
     signAllPublications()
 
-    coordinates(group.toString(), "library", version.toString())
+    coordinates(group.toString(), "kuzudb-kt", version.toString())
 
     pom {
-        name = "My library"
-        description = "A library."
+        name = "KuzuDB-Kotlin"
+        description = "A Kotlin Multiplatform library for KuzuDB."
         inceptionYear = "2024"
-        url = "https://github.com/kotlin/multiplatform-library-template/"
+        url = "https://github.com/jarbear82/kotlinlib-kuzudb/"
         licenses {
             license {
                 name = "The Apache License, Version 2.0"
@@ -68,15 +83,15 @@ mavenPublishing {
         }
         developers {
             developer {
-                id = "XXX"
-                name = "YYY"
-                url = "ZZZ"
+                id = "jarbear82"
+                name = "Jared медведь"
+                url = "https://github.com/jarbear82/"
             }
         }
         scm {
-            url = "https://github.com/kotlin/multiplatform-library-template/"
-            connection = "scm:git:git://github.com/kotlin/multiplatform-library-template.git"
-            developerConnection = "scm:git:ssh://git@github.com/kotlin/multiplatform-library-template.git"
+            url = "https://github.com/jarbear82/kotlinlib-kuzudb/"
+            connection = "scm:git:git://github.com/jarbear82/kotlinlib-kuzudb.git"
+            developerConnection = "scm:git:ssh://git@github.com/jarbear82/kotlinlib-kuzudb.git"
         }
     }
 }

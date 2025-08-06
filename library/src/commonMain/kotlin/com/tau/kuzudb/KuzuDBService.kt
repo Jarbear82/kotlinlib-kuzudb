@@ -1,7 +1,7 @@
 package com.tau.kuzudb
 
-import com.tau.kuzudb.scheme.EdgeSchema
-import com.tau.kuzudb.scheme.NodeSchema
+import com.tau.kuzudb.schema.EdgeSchema
+import com.tau.kuzudb.schema.NodeSchema
 
 
 expect class KuzuDBService() {

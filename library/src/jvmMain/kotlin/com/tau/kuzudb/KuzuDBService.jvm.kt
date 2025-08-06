@@ -1,42 +1,20 @@
 package com.tau.kuzudb
 
-import com.kuzudb.Connection
-import com.kuzudb.Database
 import com.kuzudb.DataTypeID
 import com.kuzudb.Value
 import io.github.kotlin.kuzudb.scheme.EdgeSchema
 import io.github.kotlin.kuzudb.scheme.NodeSchema
-import io.github.kotlin.kuzudb.scheme.PropertyType
-import java.nio.file.Files
-import java.nio.file.Paths
 
 actual class KuzuDBService {
-    private var db: Database? = null
-    private var conn: Connection? = null
+    private var connection: KuzuDBConnection? = null
 
     actual fun initialize(dbPath: String) {
-        try {
-            val dbDirectory = Paths.get(dbPath).parent
-            if (!Files.exists(dbDirectory)) {
-                Files.createDirectories(dbDirectory)
-            }
-            db = Database(dbPath)
-            conn = Connection(db)
-            println("KuzuDB initialized successfully at: $dbPath")
-        } catch (e: Exception) {
-            println("Failed to initialize KuzuDB: ${e.message}")
-            e.printStackTrace()
-        }
+        connection = KuzuDBConnection(dbPath)
+        connection?.connect()
     }
 
     actual fun close() {
-        try {
-            conn?.close()
-            db?.close()
-            println("KuzuDB connection closed.")
-        } catch (e: Exception) {
-            println("Failed to close KuzuDB connection: ${e.message}")
-        }
+        connection?.close()
     }
 
     actual fun createNodeSchema(schema: NodeSchema) {
@@ -89,7 +67,7 @@ actual class KuzuDBService {
     private fun executeQuery(query: String, description: String): Boolean {
         return try {
             println("Executing query: $query")
-            conn?.query(query)
+            connection?.conn?.query(query)
             println("Successfully executed query: $description")
             true
         } catch (e: Exception) {
@@ -103,7 +81,7 @@ actual class KuzuDBService {
         val results = mutableListOf<Map<String, Any?>>()
         try {
             println("Executing query: $query")
-            val queryResult = conn?.query(query)
+            val queryResult = connection?.conn?.query(query)
             queryResult?.let {
                 while (it.hasNext()) {
                     val row = it.getNext()
