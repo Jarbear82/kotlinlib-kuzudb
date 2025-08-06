@@ -7,12 +7,12 @@ import com.kuzudb.Value
 actual class KuzuDBService {
     private var connection: KuzuDBConnection? = null
 
-    actual fun initialize(dbPath: String) {
+    actual fun initialize(config: KuzuDBConfig) {
         try {
-            connection = KuzuDBConnection(dbPath)
+            connection = KuzuDBConnection(config)
             connection?.connect()
         } catch (e: Exception) {
-            throw KuzuException("Failed to initialize KuzuDB at path: $dbPath", e)
+            throw KuzuException("Failed to initialize KuzuDB with config: $config", e)
         }
     }
 

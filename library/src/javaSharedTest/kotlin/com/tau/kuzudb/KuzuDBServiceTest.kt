@@ -14,8 +14,9 @@ class KuzuDBServiceTest {
 
     @Before
     fun setUp() {
+        val config = KuzuDBConfig(dbPath)
         kuzuDBService = KuzuDBService()
-        kuzuDBService.initialize(dbPath)
+        kuzuDBService.initialize(config)
     }
 
     @After
