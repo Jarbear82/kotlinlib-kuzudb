@@ -18,7 +18,7 @@ actual class KuzuDBService {
 
     actual fun createNodeSchema(schema: NodeSchema) {
         val properties = schema.properties.joinToString(", ") {
-            "${it.key.replace(" ", "_")} ${mapPropertyType(it.type)}"
+            "${it.key} ${mapPropertyType(it.type)}"
         }
         val query = "CREATE NODE TABLE ${schema.typeName} (id STRING, $properties, PRIMARY KEY (id))"
         executeQuery(query, "create node table '${schema.typeName}'")
@@ -26,7 +26,7 @@ actual class KuzuDBService {
 
     actual fun createEdgeSchema(schema: EdgeSchema, fromTable: String, toTable: String) {
         val properties = schema.properties.joinToString(", ") {
-            "${it.key.replace(" ", "_")} ${mapPropertyType(it.type)}"
+            "${it.key} ${mapPropertyType(it.type)}"
         }
         val query = "CREATE REL TABLE ${schema.typeName} (FROM $fromTable TO $toTable, $properties)"
         executeQuery(query, "create edge table '${schema.typeName}'")
@@ -48,9 +48,10 @@ actual class KuzuDBService {
     }
 
     actual fun insertNode(tableName: String, properties: Map<String, Any>): Boolean {
-        val keys = properties.keys.joinToString(", ")
-        val values = properties.values.joinToString(", ") { "'$it'" }
-        val query = "CREATE (n:$tableName {$keys: $values})"
+        val propertiesString = properties.entries.joinToString(", ") { (key, value) ->
+            "$key: '${value}'"
+        }
+        val query = "CREATE (n:$tableName {$propertiesString})"
         return executeQuery(query, "insert node into '$tableName'")
     }
 
@@ -146,7 +147,7 @@ actual class KuzuDBService {
             PropertyType.BOOLEAN -> "BOOLEAN"
             PropertyType.DATE -> "DATE"
             PropertyType.TIMESTAMP -> "TIMESTAMP"
-            PropertyType.LIST, PropertyType.MAP, PropertyType.VECTOR, PropertyType.STRUCT -> "STRING" // Note: This might need more specific handling based on your schema design.
+            PropertyType.LIST, PropertyType.MAP, PropertyType.VECTOR, PropertyType.STRUCT -> "STRING"
         }
     }
 }

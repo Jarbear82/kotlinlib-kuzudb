@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "io.github.jarbear82"
-version = "1.0.0"
+version = "0.0.1"
 
 kotlin {
     jvm()
@@ -34,6 +34,14 @@ kotlin {
         }
         val javaSharedMain by creating {
             dependsOn(commonMain)
+        }
+        val javaSharedTest by getting {
+            dependencies {
+                implementation(libs.kotlin.test)
+                implementation(libs.junit)
+                implementation(libs.mockito.core)
+                implementation(libs.mockito.kotlin)
+            }
         }
         val jvmMain by getting {
             dependsOn(javaSharedMain)

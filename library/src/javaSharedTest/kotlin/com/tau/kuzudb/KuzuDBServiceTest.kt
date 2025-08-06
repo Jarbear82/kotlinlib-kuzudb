@@ -75,7 +75,7 @@ class KuzuDBServiceTest {
         kuzuDBService.createNodeSchema(schema)
         kuzuDBService.getNodeTables()
 
-        verify(mockConnection).query("CREATE NODE TABLE Person (id STRING, name_STRING, age_INT64, PRIMARY KEY (id))")
+        verify(mockConnection).query("CREATE NODE TABLE Person (id STRING, name STRING, age INT64, PRIMARY KEY (id))")
         verify(mockConnection).query("CALL SHOW_TABLES() WHERE type = 'NODE' RETURN name")
     }
 
@@ -96,7 +96,7 @@ class KuzuDBServiceTest {
         kuzuDBService.createEdgeSchema(schema, "Person", "Person")
         kuzuDBService.getEdgeTables()
 
-        verify(mockConnection).query("CREATE REL TABLE Knows (FROM Person TO Person, since_DATE)")
+        verify(mockConnection).query("CREATE REL TABLE Knows (FROM Person TO Person, since DATE)")
         verify(mockConnection).query("CALL SHOW_TABLES() WHERE type = 'REL' RETURN name")
     }
 
