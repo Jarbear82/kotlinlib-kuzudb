@@ -1,6 +1,5 @@
-package io.github.kotlin.kuzudb.scheme
+package com.tau.kuzudb
 
-import com.tau.kuzudb.PropertyType
 import java.util.UUID
 
 interface Identifiable {

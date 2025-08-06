@@ -1,8 +1,5 @@
 package com.tau.kuzudb
 
-import com.tau.kuzudb.schema.EdgeSchema
-import com.tau.kuzudb.schema.NodeSchema
-
 
 expect class KuzuDBService() {
     fun initialize(dbPath: String)
