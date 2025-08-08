@@ -1,6 +1,7 @@
 package com.tau.kuzudb
 
 enum class PropertyType(val displayName: String) {
+    ANY("Any Data Type"),
     INT8("8 Bit Integer"),
     INT16("16 Bit Integer"),
     INT32("32 Bit Integer"),
@@ -32,18 +33,40 @@ enum class PropertyType(val displayName: String) {
     LIST("Variable Length List"),
     ARRAY("Fixed Length List"),
     JSON("JSON Native Data Type (Requires JSON Extension)")
-
 }
 
 val PropertyType.defaultValue: Any?
     get() = when (this) {
-        PropertyType.TEXT, PropertyType.LONG_TEXT, PropertyType.IMAGE -> ""
-        PropertyType.NUMBER -> 0L // Defaulting to Long for INT64
-        PropertyType.BOOLEAN -> false
-        PropertyType.DATE -> "2023-01-01" // KuzuDB expects date as string
-        PropertyType.TIMESTAMP -> System.currentTimeMillis()
-        PropertyType.LIST -> "[]"
-        PropertyType.MAP -> "{}"
-        PropertyType.VECTOR -> "[]"
-        PropertyType.STRUCT -> "{}"
+        PropertyType.ANY,
+        PropertyType.INT8,
+        PropertyType.INT16,
+        PropertyType.INT32,
+        PropertyType.INT64,
+        PropertyType.INT128,
+        PropertyType.UINT8,
+        PropertyType.UINT16,
+        PropertyType.UINT32,
+        PropertyType.UINT64,
+        PropertyType.FLOAT,
+        PropertyType.DOUBLE,
+        // ToDo: Decimal allows you to specify the precision
+        PropertyType.DECIMAL,
+        PropertyType.BOOLEAN,
+        PropertyType.UUID,
+        PropertyType.STRING,
+        PropertyType.NULL,
+        PropertyType.DATE,
+        PropertyType.TIMESTAMP,
+        PropertyType.INTERVAL,
+        PropertyType.STRUCT,
+        PropertyType.MAP,
+        PropertyType.UNION,
+        PropertyType.BLOB,
+        PropertyType.SERIAL,
+        PropertyType.NODE,
+        PropertyType.REL,
+        PropertyType.RECURSIVE_REL,
+        PropertyType.LIST,
+        PropertyType.ARRAY,
+        PropertyType.JSON
     }
