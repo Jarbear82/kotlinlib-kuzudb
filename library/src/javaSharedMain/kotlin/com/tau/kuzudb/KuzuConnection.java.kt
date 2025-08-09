@@ -7,7 +7,7 @@ import kotlinx.coroutines.withContext
 /**
  * JVM/Android implementation of KuzuConnection.
  */
-actual class `KuzuConnection.java` actual constructor(database: KuzuDatabase) : AutoCloseable {
+actual class KuzuConnection actual constructor(database: KuzuDatabase) : AutoCloseable {
     internal val nativeConnection = com.kuzudb.Connection(database.nativeDatabase)
 
     actual suspend fun query(query: String): KuzuQueryResult {

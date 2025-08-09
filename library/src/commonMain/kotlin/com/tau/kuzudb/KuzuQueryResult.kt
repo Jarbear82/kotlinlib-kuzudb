@@ -1,35 +1,34 @@
 package com.tau.kuzudb
 
-import kotlin.io.Closeable
 
 /**
- * [cite_start]Represents the result of a query execution. [cite: 140]
- * [cite_start]Acts as an iterator over the result tuples and implements [Closeable]. [cite: 140]
+ * Represents the result of a query execution.
+ * Acts as an iterator over the result tuples and implements [AutoCloseable].
  */
-expect class KuzuQueryResult : Closeable, Iterator<KuzuTuple> {
+expect class KuzuQueryResult : AutoCloseable, Iterator<KuzuTuple> {
     /**
-     * [cite_start]Checks if the query executed successfully. [cite: 142]
+     * Checks if the query executed successfully.
      */
     fun isSuccess(): Boolean
 
     /**
      * Gets the error message if the query failed.
-     * [cite_start]@return The error message, or null if the query was successful. [cite: 143]
+     * @return The error message, or null if the query was successful.
      */
     fun getErrorMessage(): String?
 
     /**
-     * [cite_start]Gets the number of columns in the result set. [cite: 145]
+     * Gets the number of columns in the result set.
      */
     fun getNumColumns(): Long
 
     /**
-     * [cite_start]Gets the name of the column at a given index. [cite: 146]
+     * Gets the name of the column at a given index.
      */
     fun getColumnName(index: Long): String
 
     /**
-     * [cite_start]Releases all native resources associated with the query result. [cite: 147]
+     * Releases all native resources associated with the query result.
      */
     override fun close()
 }

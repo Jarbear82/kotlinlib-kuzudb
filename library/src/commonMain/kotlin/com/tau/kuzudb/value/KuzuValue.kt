@@ -1,12 +1,10 @@
 package com.tau.kuzudb.value
 
-import kotlin.io.Closeable
-
 /**
  * Represents a value in KuzuDB. This is a sealed interface to ensure type safety.
- * Implements [Closeable] for resource management.
+ * Implements [AutoCloseable] for resource management.
  */
-sealed interface KuzuValue : Closeable {
+sealed interface KuzuValue : AutoCloseable {
     override fun close() {}
 
     data class BOOL(val value: Boolean) : KuzuValue

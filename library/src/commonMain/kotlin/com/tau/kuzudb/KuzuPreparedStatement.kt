@@ -1,13 +1,12 @@
 package com.tau.kuzudb
 
 import com.tau.kuzudb.value.KuzuValue
-import kotlin.io.Closeable
 
 /**
  * Represents a prepared statement for a given Cypher query.
- * Implements [Closeable] for resource management.
+ * Implements [AutoCloseable] for resource management.
  */
-expect class KuzuPreparedStatement : Closeable {
+expect class KuzuPreparedStatement : AutoCloseable {
     /**
      * Binds a value to a parameter in the prepared statement.
      *

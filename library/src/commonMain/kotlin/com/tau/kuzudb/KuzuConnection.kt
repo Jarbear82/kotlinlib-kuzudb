@@ -1,37 +1,37 @@
 package com.tau.kuzudb
 
 import com.tau.kuzudb.value.KuzuValue
-import kotlin.io.Closeable
+
 
 /**
- * Represents a connection to a KuzuDatabase. [cite_start]Connections are thread-safe. [cite: 131, 171]
- * [cite_start]Implements [Closeable] for resource management. [cite: 132]
+ * Represents a connection to a KuzuDatabase. Connections are thread-safe.
+ * Implements AutoCloseable for resource management.
  */
-expect class KuzuConnection(database: KuzuDatabase) : Closeable {
+expect class KuzuConnection(database: KuzuDatabase) : AutoCloseable {
     /**
-     * [cite_start]Executes a Cypher query. [cite: 133]
+     * Executes a Cypher query.
      * @param query The Cypher query string.
-     * [cite_start]@return A KuzuQueryResult containing the results. [cite: 133]
+     * @return A KuzuQueryResult containing the results.
      */
     suspend fun query(query: String): KuzuQueryResult
 
     /**
-     * [cite_start]Creates a prepared statement for a given Cypher query. [cite: 135]
+     * Creates a prepared statement for a given Cypher query.
      * @param query The parameterized Cypher query string.
-     * [cite_start]@return A KuzuPreparedStatement that can be executed later. [cite: 135]
+     * @return A KuzuPreparedStatement that can be executed later.
      */
     fun prepare(query: String): KuzuPreparedStatement
 
     /**
-     * [cite_start]Executes a prepared statement with bound parameters. [cite: 137]
+     * Executes a prepared statement with bound parameters.
      * @param preparedStatement The statement to execute.
-     * [cite_start]@param params A map of parameter names to their values. [cite: 137]
-     * [cite_start]@return A KuzuQueryResult containing the results. [cite: 138]
+     * @param params A map of parameter names to their values.
+     * @return A KuzuQueryResult containing the results.
      */
     suspend fun execute(preparedStatement: KuzuPreparedStatement, params: Map<String, KuzuValue>): KuzuQueryResult
 
     /**
-     * [cite_start]Releases all native resources associated with the connection. [cite: 139]
+     * Releases all native resources associated with the connection.
      */
     override fun close()
 }

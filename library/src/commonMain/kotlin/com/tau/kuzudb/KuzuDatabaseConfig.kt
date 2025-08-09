@@ -1,7 +1,7 @@
 package com.tau.kuzudb
 
 /**
- * [cite_start]A data class for holding advanced KuzuDB configuration settings. [cite: 164]
+ * A data class for holding advanced KuzuDB configuration settings.
  *
  * @param bufferPoolSize The size of the buffer pool in bytes.
  * @param enableCompression Whether to enable compression.

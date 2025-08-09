@@ -1,5 +1,8 @@
 package com.tau.kuzudb
 
+import com.kuzudb.FlatTuple
+import com.kuzudb.Value
+
 /**
  * JVM/Android implementation of KuzuQueryResult.
  */
@@ -22,9 +25,9 @@ actual class KuzuQueryResult(
     override fun next(): KuzuTuple {
         if (!hasNext()) throw NoSuchElementException()
 
-        val nativeTuple = nativeResult.next()
+        val nativeTuple : FlatTuple = nativeResult.getNext()
         val values = (0 until nativeResult.numColumns).map {
-            val nativeValue = nativeTuple.getValue(it.toLong())
+            val nativeValue : Value = nativeTuple.getValue(it.toLong())
             // This is a simplified conversion. A real implementation would need a
             // comprehensive mapping from native `com.kuzudb.Value` to `KuzuValue`
             // and MUST clone the value for safety.
