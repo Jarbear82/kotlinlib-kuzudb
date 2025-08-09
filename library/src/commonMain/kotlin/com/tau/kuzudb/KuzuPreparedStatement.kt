@@ -11,4 +11,8 @@ expect class KuzuPreparedStatement : AutoCloseable {
      * Releases all native resources associated with the prepared statement.
      */
     override fun close()
+
+    fun isSuccess() : Boolean
+
+    fun getErrorMessage() : String
 }

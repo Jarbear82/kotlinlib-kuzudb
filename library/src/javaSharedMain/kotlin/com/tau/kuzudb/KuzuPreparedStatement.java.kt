@@ -12,4 +12,16 @@ actual class KuzuPreparedStatement(
     actual override fun close() {
         nativeStatement.close()
     }
+
+    actual fun isSuccess() : Boolean {
+        return nativeStatement.isSuccess
+    }
+
+    actual fun getErrorMessage() : String {
+        try {
+           return  nativeStatement.errorMessage
+        } catch (e: RuntimeException) {
+            throw KuzuException(e.message ?: "Unkown Prepared Statement Exception")
+        }
+    }
 }
