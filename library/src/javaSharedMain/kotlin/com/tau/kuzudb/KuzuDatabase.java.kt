@@ -18,13 +18,13 @@ actual class KuzuDatabase : AutoCloseable {
 
     actual constructor(config: KuzuDatabaseConfig) {
         nativeDatabase = Database(
-            databsePath=config.databasePath,
-            bufferPoolSize=config.bufferPoolSize,
-            enableCompression=config.enableCompression,
-            readOnly=config.readOnly,
-            maxDBSize=config.maxDBSize,
-            autoCheckpoint=config.autoCheckpoint,
-            checkpointThreshhold=config.checkpointThreshold
+            config.databasePath,
+            config.bufferPoolSize,
+            config.enableCompression,
+            config.readOnly,
+            config.maxDBSize,
+            config.autoCheckpoint,
+            config.checkpointThreshold
         )
     }
 
