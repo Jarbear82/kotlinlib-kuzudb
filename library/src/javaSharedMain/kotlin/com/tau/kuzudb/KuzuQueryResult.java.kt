@@ -25,14 +25,34 @@ actual class KuzuQueryResult(
     override fun next(): KuzuTuple {
         if (!hasNext()) throw NoSuchElementException()
 
-        val nativeTuple : FlatTuple = nativeResult.getNext()
-        val values = (0 until nativeResult.numColumns).map {
-            val nativeValue : Value = nativeTuple.getValue(it.toLong())
-            // This is a simplified conversion. A real implementation would need a
-            // comprehensive mapping from native `com.kuzudb.Value` to `KuzuValue`
-            // and MUST clone the value for safety.
-            com.tau.kuzudb.value.KuzuValue.STRING(nativeValue.toString())
+        val nativeTuple: com.kuzudb.FlatTuple = nativeResult.getNext()
+        val values = (0 until nativeResult.numColumns).map { i ->
+            val nativeValue: com.kuzudb.Value = nativeTuple.getValue(i.toLong())
+            // It's crucial to clone the value for safety, as the underlying memory can be freed.
+            val clonedValue = nativeValue.clone()
+            convertFromNative(clonedValue)
         }
         return KuzuTuple(values)
     }
+
+    private fun convertFromNative(nativeValue: com.kuzudb.Value): KuzuValue {
+        if (nativeValue.isNull) return KuzuValue.NULL
+
+        return when (val value = nativeValue.value) {
+            is Boolean -> KuzuValue.BOOL(value)
+            is Byte -> KuzuValue.INT8(value)
+            is Short -> KuzuValue.INT16(value)
+            is Int -> KuzuValue.INT32(value)
+            is Long -> KuzuValue.INT64(value)
+            is Float -> KuzuValue.FLOAT(value)
+            is Double -> KuzuValue.DOUBLE(value)
+            is String -> KuzuValue.STRING(value)
+            is ByteArray -> KuzuValue.BLOB(value)
+            is List<*> -> KuzuValue.LIST(value.map { convertFromNative(it as com.kuzudb.Value) })
+            is Map<*, *> -> KuzuValue.MAP(
+                (value as Map<String, com.kuzudb.Value>).mapValues { convertFromNative(it.value) }
+            )
+            // Add other conversions as needed...
+            else -> throw KuzuTypeException("Unsupported native type: ${value.javaClass.name}")
+        }
 }
