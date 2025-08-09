@@ -6,17 +6,23 @@ package com.tau.kuzudb
  * Implements Closeable for resource management.
  */
 expect class KuzuDatabase : AutoCloseable {
+
+    /**
+     * Default Empty Constructor
+     */
+    constructor()
+
     /**
      * Creates or opens a database.
      * @param path The path to the database file. Use an empty string or ":memory:" for an in-memory database.
-     * @param config Optional advanced configuration settings.
      */
-    constructor(path: String, config: KuzuDatabaseConfig? = null)
+    constructor(path: String)
 
     /**
-     * Gets the version of the Kuzu library.
+     * Creates or opens a database.
+     * @param config Advanced configuration settings.
      */
-    fun getVersion(): String
+    constructor(config: KuzuDatabaseConfig)
 
     /**
      * Releases all native resources associated with the database.

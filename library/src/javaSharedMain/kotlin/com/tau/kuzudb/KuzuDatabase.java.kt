@@ -1,20 +1,31 @@
 package com.tau.kuzudb
 
+import com.kuzudb.Database
+
 /**
  * JVM/Android implementation of KuzuDatabase.
  */
-actual class KuzuDatabase actual constructor(
-    path: String,
-    config: KuzuDatabaseConfig?
-) : AutoCloseable {
+actual class KuzuDatabase : AutoCloseable {
+    internal val nativeDatabase: Database
 
-    internal val nativeDatabase: com.kuzudb.Database = if (config == null) {
-        com.kuzudb.Database(path)
-    } else {
-        com.kuzudb.Database(path, config.bufferPoolSize, config.enableCompression, config.readOnly)
+    actual constructor() {
+        nativeDatabase = Database()
     }
-    actual fun getVersion(): String {
-        return com.kuzudb.Database.getVersion()
+
+    actual constructor(path: String) {
+        nativeDatabase = Database(path)
+    }
+
+    actual constructor(config: KuzuDatabaseConfig) {
+        nativeDatabase = Database(
+            databsePath=config.databasePath,
+            bufferPoolSize=config.bufferPoolSize,
+            enableCompression=config.enableCompression,
+            readOnly=config.readOnly,
+            maxDBSize=config.maxDBSize,
+            autoCheckpoint=config.autoCheckpoint,
+            checkpointThreshhold=config.checkpointThreshold
+        )
     }
 
     actual override fun close() {

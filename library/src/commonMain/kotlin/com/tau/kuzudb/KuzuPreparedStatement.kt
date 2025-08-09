@@ -8,14 +8,6 @@ import com.tau.kuzudb.value.KuzuValue
  */
 expect class KuzuPreparedStatement : AutoCloseable {
     /**
-     * Binds a value to a parameter in the prepared statement.
-     *
-     * @param name The name of the parameter.
-     * @param value The value to bind.
-     */
-    fun bind(name: String, value: KuzuValue)
-
-    /**
      * Releases all native resources associated with the prepared statement.
      */
     override fun close()

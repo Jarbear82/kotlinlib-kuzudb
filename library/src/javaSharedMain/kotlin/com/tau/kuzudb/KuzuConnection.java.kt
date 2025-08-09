@@ -1,7 +1,5 @@
 package com.tau.kuzudb
 
-import convertToNative
-
 import com.tau.kuzudb.value.KuzuValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -12,34 +10,65 @@ import kotlinx.coroutines.withContext
 actual class KuzuConnection actual constructor(database: KuzuDatabase) : AutoCloseable {
     internal val nativeConnection = com.kuzudb.Connection(database.nativeDatabase)
 
-    actual suspend fun query(query: String): KuzuQueryResult {
-        return withContext(Dispatchers.IO) {
-            try {
-                val nativeResult = nativeConnection.query(query)
-                KuzuQueryResult(nativeResult)
-            } catch (e: KuzuException) {
-                throw KuzuQueryException(e.message ?: "Unknown Kuzu query error")
-            }
-        }
-    }
-
-    actual fun prepare(query: String): KuzuPreparedStatement {
-        return KuzuPreparedStatement(nativeConnection.prepare(query))
-    }
-
-    actual suspend fun execute(preparedStatement: KuzuPreparedStatement): KuzuQueryResult {
-        return withContext(Dispatchers.IO) {
-            try {
-                // The user is now responsible for calling bind() on the preparedStatement first.
-                val nativeResult = nativeConnection.execute(preparedStatement.nativeStatement)
-                KuzuQueryResult(nativeResult)
-            } catch (e: KuzuException) {
-                throw KuzuQueryException(e.message ?: "Unknown Kuzu query error")
-            }
-        }
-    }
-
     actual override fun close() {
         nativeConnection.close()
     }
+
+    actual fun getMaxNumThreadForExec() : Long {
+        try {
+            return nativeConnection.maxNumThreadForExec
+        }
+        catch (e: RuntimeException) {
+            throw KuzuConnectionException(e.message ?: "Unknown Kuzu Connection Error")
+        }
+
+    }
+
+    actual fun setMaxNumThreadForExec(numThreads: Long) {
+        nativeConnection.maxNumThreadForExec = numThreads
+    }
+
+    actual suspend fun query(queryStr: String): KuzuQueryResult {
+        return withContext(Dispatchers.IO) {
+            try {
+                val nativeResult = nativeConnection.query(queryStr)
+                KuzuQueryResult(nativeResult)
+            } catch (e: KuzuException) {
+                throw KuzuQueryException(e.message ?: "Unknown Kuzu query error")
+            }
+        }
+    }
+
+    actual fun prepare(queryStr: String): KuzuPreparedStatement {
+        return KuzuPreparedStatement(nativeConnection.prepare(queryStr))
+    }
+
+    actual suspend fun execute(preparedStatement: KuzuPreparedStatement, params: Map<String, KuzuValue>): KuzuQueryResult {
+        return withContext(Dispatchers.IO) {
+            try {
+                val nativeResult = nativeConnection.execute(preparedStatement.nativeStatement, params)
+                KuzuQueryResult(nativeResult)
+            } catch (e: KuzuException) {
+                throw KuzuQueryException(e.message ?: "Unknown Kuzu query error")
+            }
+        }
+    }
+
+    actual fun interrupt() {
+        try{
+            nativeConnection.interrupt()
+        } catch (e: RuntimeException) {
+            throw KuzuConnectionException(e.message ?: "Unknown Kuzu Connection Error")
+        }
+    }
+
+    actual fun setQueryTimeout(timeoutInMs: Long) {
+        try {
+            nativeConnection.setQueryTimeout(timeoutInMs)
+        } catch (e: RuntimeException) {
+            throw KuzuConnectionException(e.message ?: "Unkown Kuzu Connection Error")
+        }
+    }
+
+
 }
