@@ -1,7 +1,6 @@
 package com.tau.kuzudb
 
-import com.kuzudb.FlatTuple
-import com.kuzudb.Value
+import convertFromNative
 
 /**
  * JVM/Android implementation of KuzuQueryResult.
@@ -35,24 +34,4 @@ actual class KuzuQueryResult(
         return KuzuTuple(values)
     }
 
-    private fun convertFromNative(nativeValue: com.kuzudb.Value): KuzuValue {
-        if (nativeValue.isNull) return KuzuValue.NULL
-
-        return when (val value = nativeValue.value) {
-            is Boolean -> KuzuValue.BOOL(value)
-            is Byte -> KuzuValue.INT8(value)
-            is Short -> KuzuValue.INT16(value)
-            is Int -> KuzuValue.INT32(value)
-            is Long -> KuzuValue.INT64(value)
-            is Float -> KuzuValue.FLOAT(value)
-            is Double -> KuzuValue.DOUBLE(value)
-            is String -> KuzuValue.STRING(value)
-            is ByteArray -> KuzuValue.BLOB(value)
-            is List<*> -> KuzuValue.LIST(value.map { convertFromNative(it as com.kuzudb.Value) })
-            is Map<*, *> -> KuzuValue.MAP(
-                (value as Map<String, com.kuzudb.Value>).mapValues { convertFromNative(it.value) }
-            )
-            // Add other conversions as needed...
-            else -> throw KuzuTypeException("Unsupported native type: ${value.javaClass.name}")
-        }
 }

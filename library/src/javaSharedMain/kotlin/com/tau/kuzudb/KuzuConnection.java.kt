@@ -1,6 +1,6 @@
 package com.tau.kuzudb
 
-import com.tau.kuzudb.KuzuException
+import convertToNative
 
 import com.tau.kuzudb.value.KuzuValue
 import kotlinx.coroutines.Dispatchers
@@ -27,25 +27,11 @@ actual class KuzuConnection actual constructor(database: KuzuDatabase) : AutoClo
         return KuzuPreparedStatement(nativeConnection.prepare(query))
     }
 
-    actual suspend fun execute(
-        preparedStatement: KuzuPreparedStatement,
-        params: Map<String, KuzuValue>
-    ): KuzuQueryResult {
+    actual suspend fun execute(preparedStatement: KuzuPreparedStatement): KuzuQueryResult {
         return withContext(Dispatchers.IO) {
             try {
-                // The Java API doesn't have a direct execute with map, so we bind manually
-                val nativeStatement = preparedStatement.nativeStatement
-
-                // Create a map to hold the native parameter values
-                val nativeParams = mutableMapOf<String, com.kuzudb.Value>()
-
-                // Convert the KuzuValue objects to their native counterparts
-                params.forEach { (key, value) ->
-                    nativeParams[key] = value.nativeValue
-                }
-
-                // Execute the prepared statement with the native parameters
-                val nativeResult = nativeConnection.execute(nativeStatement, nativeParams)
+                // The user is now responsible for calling bind() on the preparedStatement first.
+                val nativeResult = nativeConnection.execute(preparedStatement.nativeStatement)
                 KuzuQueryResult(nativeResult)
             } catch (e: KuzuException) {
                 throw KuzuQueryException(e.message ?: "Unknown Kuzu query error")

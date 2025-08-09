@@ -28,8 +28,7 @@ expect class KuzuConnection(database: KuzuDatabase) : AutoCloseable {
      * @param params A map of parameter names to their values.
      * @return A KuzuQueryResult containing the results.
      */
-    suspend fun execute(preparedStatement: KuzuPreparedStatement, params: Map<String, KuzuValue>): KuzuQueryResult
-
+    suspend fun execute(preparedStatement: KuzuPreparedStatement): KuzuQueryResult
     /**
      * Releases all native resources associated with the connection.
      */
