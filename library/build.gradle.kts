@@ -24,6 +24,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(libs.kuzu)
+                implementation(libs.kotlinx.coroutines.core)
             }
         }
         val commonTest by getting {
@@ -36,6 +37,7 @@ kotlin {
 
         }
         val javaSharedTest by creating {
+            dependsOn(commonTest)
             dependencies {
                 implementation(libs.kotlin.test)
                 implementation(libs.junit)
