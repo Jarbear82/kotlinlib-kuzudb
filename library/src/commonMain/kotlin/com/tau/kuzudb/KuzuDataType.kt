@@ -5,19 +5,19 @@ expect class KuzuDataType : AutoCloseable {
 
     constructor(
         id: KuzuDataTypeID,
-        childType: KuzuDataTypeID,
+        childTypeId: KuzuDataTypeID,
         numElementsInArray: Long
     )
 
-    override fun clone() : KuzuDataType
+    fun clone(): KuzuDataType
 
     override fun close()
 
-    override fun equals() : Boolean
+    fun equals(other: KuzuDataType): Boolean
 
-    override fun getChildType() : KuzuDataType
+    fun getChildType() : KuzuDataType
 
-    override fun getFixedNumElementsInList() : Long
+    fun getFixedNumElementsInList() : Long
 
-    override fun getID() : KuzuDataTypeID
+    fun getID() : KuzuDataTypeID
 }

@@ -2,7 +2,7 @@ package com.tau.kuzudb
 
 import com.kuzudb.DataTypeID
 
-actual enum class KuzuDataTypeID(nativeType: DataTypeID) {
+actual enum class KuzuDataTypeID(internal val nativeType: DataTypeID) {
     ANY(DataTypeID.ANY),
     ARRAY(DataTypeID.ARRAY),
     BLOB(DataTypeID.BLOB),
@@ -35,5 +35,12 @@ actual enum class KuzuDataTypeID(nativeType: DataTypeID) {
     UINT64(DataTypeID.UINT64),
     UINT8(DataTypeID.UINT8),
     UNION(DataTypeID.UNION),
-    UUID(DataTypeID.UUID)
+    UUID(DataTypeID.UUID);
+
+    companion object {
+        private val aMap: Map<DataTypeID, KuzuDataTypeID> = values().associateBy { it.nativeType }
+        internal fun fromNative(nativeType: DataTypeID): KuzuDataTypeID {
+            return aMap[nativeType] ?: throw KuzuException("Unsupported data type: ${nativeType.name}")
+        }
+    }
 }

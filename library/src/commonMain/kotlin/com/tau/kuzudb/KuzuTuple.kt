@@ -7,4 +7,11 @@ import com.tau.kuzudb.value.KuzuValue
  *
  * @param values The list of values in the tuple.
  */
-data class KuzuTuple(val values: List<KuzuValue>)
+expect class KuzuTuple() : AutoCloseable {
+
+    override fun close()
+
+    fun getValue(index: Long)
+
+    override fun toString() : String
+}
