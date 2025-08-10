@@ -1,6 +1,5 @@
 package com.tau.kuzudb
 
-
 /**
  * Represents a KuzuDB database instance, either on-disk or in-memory.
  * Implements Closeable for resource management.

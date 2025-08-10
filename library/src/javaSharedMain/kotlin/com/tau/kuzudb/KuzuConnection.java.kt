@@ -1,6 +1,6 @@
 package com.tau.kuzudb
 
-import com.tau.kuzudb.value.KuzuValue
+import com.tau.kuzudb.KuzuValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

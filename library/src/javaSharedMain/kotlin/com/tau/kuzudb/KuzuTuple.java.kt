@@ -9,7 +9,7 @@ actual class KuzuTuple : AutoCloseable {
         nativeTuple.close()
     }
 
-    actual fun getValue(index: Long) KuzuValue {
+    fun getValue(index: Long) KuzuValue {
         try {
             return KuzuValue(nativeTuple.getValue(index))
         } catch (e: RuntimeException) {
