@@ -20,7 +20,7 @@ actual class KuzuDataType : AutoCloseable {
         childTypeId: KuzuDataTypeID,
         numElementsInArray: Long
     ) {
-        this.nativeDataType = DataType(id.nativeType, childTypeId.nativeType, numElementsInArray)
+        this.nativeDataType = DataType(id.nativeType, KuzuDataType(childTypeId).nativeDataType, numElementsInArray)
     }
 
     actual fun getID(): KuzuDataTypeID {
