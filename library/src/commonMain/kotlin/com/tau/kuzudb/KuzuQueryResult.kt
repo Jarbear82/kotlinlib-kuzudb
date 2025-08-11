@@ -18,7 +18,7 @@ expect class KuzuQueryResult : AutoCloseable, Iterator<KuzuTuple> {
     /**
      * Get the column name at the given index.
      */
-    fun getColumnName(index: Long)
+    fun getColumnName(index: Long) : String
 
     /**
      * Get the error message if any.

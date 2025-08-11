@@ -1,7 +1,5 @@
 package com.tau.kuzudb
 
-import com.tau.kuzudb.value.KuzuValue
-
 /**
  * Represents a prepared statement for a given Cypher query.
  * Implements [AutoCloseable] for resource management.
