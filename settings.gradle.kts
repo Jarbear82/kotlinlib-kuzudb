@@ -14,4 +14,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "kuzudb-kt"
-include(":library")
+include(":kuzudb-kt")
