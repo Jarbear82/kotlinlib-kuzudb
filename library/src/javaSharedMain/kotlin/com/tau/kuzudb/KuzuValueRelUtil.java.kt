@@ -15,20 +15,16 @@ actual object KuzuValueRelUtil {
         return NativeValueRelUtil.getLabelName(value.nativeValue)
     }
 
-    actual fun getPropertyNameAt(value: KuzuValue): String {
-        // The Java implementation is missing the index parameter.
-        // This is a placeholder.
-        return ""
+    actual fun getPropertyNameAt(value: KuzuValue, index: Long): String {
+        return NativeValueRelUtil.getPropertyNameAt(value.nativeValue, index)
     }
 
     actual fun getPropertySize(value: KuzuValue): Long {
         return NativeValueRelUtil.getPropertySize(value.nativeValue)
     }
 
-    actual fun getPropertyValueAt(value: KuzuValue): KuzuValue {
-        // The Java implementation is missing the index parameter.
-        // This is a placeholder.
-        return KuzuValue(null)
+    actual fun getPropertyValueAt(value: KuzuValue, index: Long): KuzuValue {
+        return KuzuValue(NativeValueRelUtil.getPropertyValueAt(value.nativeValue, index))
     }
 
     actual fun getSrcID(value: KuzuValue): KuzuInternalID {

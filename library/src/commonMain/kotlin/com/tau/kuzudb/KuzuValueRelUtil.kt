@@ -19,7 +19,7 @@ expect object KuzuValueRelUtil {
     /**
      * Get the property name at the given index from the given rel value.
      */
-    fun getPropertyNameAt(value: KuzuValue) : String
+    fun getPropertyNameAt(value: KuzuValue, index: Long) : String
 
     /**
      * Get the property size of the rel value.
@@ -29,7 +29,7 @@ expect object KuzuValueRelUtil {
     /**
      * Get the property value at the given index from the given rel value.
      */
-    fun getPropertyValueAt(value: KuzuValue) : KuzuValue
+    fun getPropertyValueAt(value: KuzuValue, index: Long) : KuzuValue
 
     /**
      * Get source id of the given rel value.
