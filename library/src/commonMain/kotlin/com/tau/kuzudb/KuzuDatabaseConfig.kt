@@ -2,10 +2,14 @@ package com.tau.kuzudb
 
 /**
  * A data class for holding advanced KuzuDB configuration settings.
- * TODO: Update Kdoc to reflect new config parameters
- * @param bufferPoolSize The size of the buffer pool in bytes.
- * @param enableCompression Whether to enable compression.
- * @param readOnly Whether to open the database in read-only mode.
+ *
+ * @property databasePath Path to the database. If the path is empty or equal to ":memory:", the database will be created in memory.
+ * @property bufferPoolSize Max size of the buffer pool in bytes.
+ * @property enableCompression Enable compression in storage.
+ * @property readOnly Open the database in READ_ONLY mode.
+ * @property maxDBSize The maximum size of the database in bytes. This is a temporary measure to work around the default 8TB mmap address space limit in some environments.
+ * @property autoCheckpoint If true, the database will automatically checkpoint when the size of the WAL file exceeds the checkpoint threshold.
+ * @property checkpointThreshold The threshold of the WAL file size in bytes. When the size of the WAL file exceeds this threshold, the database will checkpoint if autoCheckpoint is true.
  */
 data class KuzuDatabaseConfig(
     val databasePath: String?,
