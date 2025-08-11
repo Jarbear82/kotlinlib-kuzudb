@@ -19,7 +19,7 @@ actual class KuzuConnection actual constructor(database: KuzuDatabase) : AutoClo
             return nativeConnection.maxNumThreadForExec
         }
         catch (e: RuntimeException) {
-            throw KuzuConnectionException(e.message ?: "Unknown Kuzu Connection Error")
+            throw KuzuConnectionException(e.message ?: "Unknown Kuzu Connection Error", e)
         }
 
     }
@@ -34,7 +34,7 @@ actual class KuzuConnection actual constructor(database: KuzuDatabase) : AutoClo
                 val nativeResult = nativeConnection.query(queryStr)
                 KuzuQueryResult(nativeResult)
             } catch (e: KuzuException) {
-                throw KuzuQueryException(e.message ?: "Unknown Kuzu query error")
+                throw KuzuQueryException(e.message ?: "Unknown Kuzu query error", e)
             }
         }
     }
@@ -50,7 +50,7 @@ actual class KuzuConnection actual constructor(database: KuzuDatabase) : AutoClo
                 val nativeResult = nativeConnection.execute(preparedStatement.nativeStatement, nativeParams)
                 KuzuQueryResult(nativeResult)
             } catch (e: KuzuException) {
-                throw KuzuQueryException(e.message ?: "Unknown Kuzu query error")
+                throw KuzuQueryException(e.message ?: "Unknown Kuzu query error", e)
             }
         }
     }
@@ -59,7 +59,7 @@ actual class KuzuConnection actual constructor(database: KuzuDatabase) : AutoClo
         try{
             nativeConnection.interrupt()
         } catch (e: RuntimeException) {
-            throw KuzuConnectionException(e.message ?: "Unknown Kuzu Connection Error")
+            throw KuzuConnectionException(e.message ?: "Unknown Kuzu Connection Error", e)
         }
     }
 
@@ -67,7 +67,7 @@ actual class KuzuConnection actual constructor(database: KuzuDatabase) : AutoClo
         try {
             nativeConnection.setQueryTimeout(timeoutInMs)
         } catch (e: RuntimeException) {
-            throw KuzuConnectionException(e.message ?: "Unkown Kuzu Connection Error")
+            throw KuzuConnectionException(e.message ?: "Unkown Kuzu Connection Error", e)
         }
     }
 }

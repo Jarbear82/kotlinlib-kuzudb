@@ -19,9 +19,9 @@ actual class KuzuPreparedStatement(
 
     actual fun getErrorMessage() : String {
         try {
-           return  nativeStatement.errorMessage
+            return  nativeStatement.errorMessage
         } catch (e: RuntimeException) {
-            throw KuzuException(e.message ?: "Unkown Prepared Statement Exception")
+            throw KuzuException(e.message ?: "Unkown Prepared Statement Exception", e)
         }
     }
 }

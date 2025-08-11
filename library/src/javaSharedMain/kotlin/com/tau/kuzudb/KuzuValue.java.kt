@@ -30,7 +30,7 @@ actual class KuzuValue : AutoCloseable {
         try {
             nativeValue.checkNotDestroyed()
         } catch (e: RuntimeException) {
-            throw KuzuException(e.message ?: "Unknown Kuzu Value Exception")
+            throw KuzuException(e.message ?: "Unknown Kuzu Value Exception", e)
         }
     }
 
@@ -70,7 +70,7 @@ actual class KuzuValue : AutoCloseable {
         try {
             nativeValue.close()
         } catch (e: RuntimeException) {
-            throw KuzuException(e.message ?: "Unknown Kuzu Value Error")
+            throw KuzuException(e.message ?: "Unknown Kuzu Value Error", e)
         }
     }
 }
