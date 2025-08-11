@@ -63,6 +63,14 @@ kotlin {
         val androidMain by getting {
             dependsOn(javaSharedMain)
         }
+
+        targets.all {
+            compilations.all {
+                compilerOptions.configure {
+                    freeCompilerArgs.add("-Xexpect-actual-classes")
+                }
+            }
+        }
     }
 }
 
