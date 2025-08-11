@@ -89,7 +89,9 @@ android {
 mavenPublishing {
     publishToMavenCentral()
 
-    signAllPublications()
+    if (providers.environmentVariable("SIGNING_KEY_ID").isPresent) {
+        signAllPublications()
+    }
 
     coordinates(group.toString(), "kuzudb-kt", version.toString())
 
