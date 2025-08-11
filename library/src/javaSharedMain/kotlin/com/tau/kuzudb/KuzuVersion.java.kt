@@ -1,13 +1,15 @@
 package com.tau.kuzudb
 
+import com.kuzudb.Version as NativeVersion
+
 actual object KuzuVersion {
     /**
      * Get the storage version of the Kuzu.
      */
-    fun getStorageVersion() : Long
+    actual fun getStorageVersion(): Long = NativeVersion.getStorageVersion()
 
     /**
      * Get the version of the Kuzu.
      */
-    fun getVersion() : String
+    actual fun getVersion(): String = NativeVersion.getVersion()
 }

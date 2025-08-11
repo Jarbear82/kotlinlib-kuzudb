@@ -3,20 +3,17 @@ package com.tau.kuzudb
 import com.kuzudb.FlatTuple
 
 actual class KuzuTuple : AutoCloseable {
-    internal val nativeTuple : FlatTuple = FlatTuple()
+    internal val nativeTuple : FlatTuple
 
+    internal constructor(nativeTuple: FlatTuple) {
+        this.nativeTuple = nativeTuple
+    }
     actual override fun close() {
         nativeTuple.close()
     }
 
-    fun getValue(index: Long) KuzuValue {
-        try {
-            return KuzuValue(nativeTuple.getValue(index))
-        } catch (e: RuntimeException) {
-            throw KuzuException(message = e.message ?: "Unknown KuzuTuple Exception")
-        } catch (e: RuntimeException) {
-            throw KuzuException(e.message ?: "")
-        }
+    actual fun getValue(index: Long) {
+        KuzuValue(nativeTuple.getValue(index))
     }
 
     actual override fun toString() : String {

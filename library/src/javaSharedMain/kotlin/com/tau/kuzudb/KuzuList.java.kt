@@ -1,19 +1,43 @@
 package com.tau.kuzudb
 
+import com.kuzudb.KuzuList as NativeKuzuList
+
 actual class KuzuList : AutoCloseable {
-    constructor(type: KuzuDataType, numElements: Long)
+    internal val nativeList: NativeKuzuList
 
-    constructor(value: KuzuValue)
+    actual constructor(type: KuzuDataType, numElements: Long) {
+        this.nativeList = NativeKuzuList(type.nativeDataType, numElements)
+    }
 
-    constructor(values: Array<KuzuValue>)
+    actual constructor(value: KuzuValue) {
+        this.nativeList = NativeKuzuList(value.nativeValue)
+    }
 
-    override fun close()
+    actual constructor(values: Array<KuzuValue>) {
+        this.nativeList = NativeKuzuList(values.map { it.nativeValue }.toTypedArray())
+    }
 
-    fun getListElement(index: Long) : KuzuValue
+    internal constructor(nativeList: NativeKuzuList) {
+        this.nativeList = nativeList
+    }
 
-    fun getListSize() : Long
+    actual override fun close() {
+        nativeList.close()
+    }
 
-    fun getValue() : KuzuValue
+    actual fun getListElement(index: Long): KuzuValue {
+        return KuzuValue(nativeList.getListElement(index))
+    }
 
-    fun toArray() : Array<KuzuValue>
+    actual fun getListSize(): Long {
+        return nativeList.listSize
+    }
+
+    actual fun getValue(): KuzuValue {
+        return KuzuValue(nativeList.value)
+    }
+
+    actual fun toArray(): Array<KuzuValue> {
+        return nativeList.toArray().map { KuzuValue(it) }.toTypedArray()
+    }
 }

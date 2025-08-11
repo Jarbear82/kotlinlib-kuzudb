@@ -1,7 +1,5 @@
 package com.tau.kuzudb
 
-import com.tau.kuzudb.value.KuzuValue
-
 /**
  * Represents a single row in a KuzuQueryResult.
  *

@@ -1,6 +1,6 @@
 package com.tau.kuzudb
 
-expect class KuzuQuerySummary() {
+expect class KuzuQuerySummary {
     /**
      * Construct a new query summary.
      */

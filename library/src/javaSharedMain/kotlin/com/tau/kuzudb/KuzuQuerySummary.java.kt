@@ -1,19 +1,27 @@
 package com.tau.kuzudb
 
-actual class KuzuQuerySummary() {
+actual class KuzuQuerySummary {
+    internal val nativeSummary: com.kuzudb.QuerySummary
+
+    internal constructor(nativeSummary: com.kuzudb.QuerySummary) {
+        this.nativeSummary = nativeSummary
+    }
     /**
      * Construct a new query summary.
      */
-    constructor(cmpTime: Double, exeTime: Double)
+    actual constructor(cmpTime: Double, exeTime: Double) {
+        this.nativeSummary = com.kuzudb.QuerySummary(cmpTime, exeTime)
+    }
 
     /**
      * Get the compiling time of the query.
      */
-    fun getCompilingTime() : Double
+    actual fun getCompilingTime(): Double = nativeSummary.compilingTime
 
     /**
      * Get the execution time of the query.
      */
-    fun getExecutionTime()
-
+    actual fun getExecutionTime() {
+        nativeSummary.executionTime
+    }
 }

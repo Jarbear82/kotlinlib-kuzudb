@@ -46,7 +46,8 @@ actual class KuzuConnection actual constructor(database: KuzuDatabase) : AutoClo
     actual suspend fun execute(preparedStatement: KuzuPreparedStatement, params: Map<String, KuzuValue>): KuzuQueryResult {
         return withContext(Dispatchers.IO) {
             try {
-                val nativeResult = nativeConnection.execute(preparedStatement.nativeStatement, params)
+                val nativeParams = params.mapValues { it.value.nativeValue }
+                val nativeResult = nativeConnection.execute(preparedStatement.nativeStatement, nativeParams)
                 KuzuQueryResult(nativeResult)
             } catch (e: KuzuException) {
                 throw KuzuQueryException(e.message ?: "Unknown Kuzu query error")
@@ -69,6 +70,4 @@ actual class KuzuConnection actual constructor(database: KuzuDatabase) : AutoClo
             throw KuzuConnectionException(e.message ?: "Unkown Kuzu Connection Error")
         }
     }
-
-
 }

@@ -1,17 +1,38 @@
 package com.tau.kuzudb
 
+import com.kuzudb.KuzuMap as NativeKuzuMap
+
 actual class KuzuMap : AutoCloseable {
-    constructor(value: KuzuValue)
+    internal val nativeMap: NativeKuzuMap
+    actual constructor(value: KuzuValue) {
+        this.nativeMap = NativeKuzuMap(value.nativeValue)
+    }
 
-    constructor(keys: Array<KuzuValue>, values: Array<KuzuValue>)
+    actual constructor(keys: Array<KuzuValue>, values: Array<KuzuValue>) {
+        this.nativeMap = NativeKuzuMap(keys.map{it.nativeValue}.toTypedArray(), values.map{it.nativeValue}.toTypedArray())
+    }
 
-    override fun close()
+    internal constructor(nativeMap: NativeKuzuMap) {
+        this.nativeMap = nativeMap
+    }
 
-    fun getKey(index: Long) : KuzuValue
+    actual override fun close() {
+        nativeMap.close()
+    }
 
-    fun getNumFields() : Long
+    actual fun getKey(index: Long): KuzuValue {
+        return KuzuValue(nativeMap.getKey(index))
+    }
 
-    fun getValue() : KuzuValue
+    actual fun getNumFields(): Long {
+        return nativeMap.numFields
+    }
 
-    fun getValue(index: Long) : KuzuValue
+    actual fun getValue(): KuzuValue {
+        return KuzuValue(nativeMap.value)
+    }
+
+    actual fun getValue(index: Long): KuzuValue {
+        return KuzuValue(nativeMap.getValue(index))
+    }
 }

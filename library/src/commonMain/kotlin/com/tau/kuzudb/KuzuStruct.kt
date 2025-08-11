@@ -43,7 +43,7 @@ expect class KuzuStruct : AutoCloseable {
     /**
      * Get the value of the field at the given index
      */
-    fun getValueByIndex(inde: Long) : KuzuValue
+    fun getValueByIndex(index: Long) : KuzuValue
 
     /**
      * Gets the elements the struct as a Kotlin map.

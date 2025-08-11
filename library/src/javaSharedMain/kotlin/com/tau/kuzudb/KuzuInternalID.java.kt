@@ -1,11 +1,27 @@
 package com.tau.kuzudb
 
 actual class KuzuInternalID {
-    constructor(tableID: Long, offset: Long)
+    internal val nativeInternalID: com.kuzudb.InternalID
 
-    fun equals(obj: Object) : Boolean
+    actual constructor(tableID: Long, offset: Long) {
+        this.nativeInternalID = com.kuzudb.InternalID(tableID, offset)
+    }
+    internal constructor(nativeInternalID: com.kuzudb.InternalID) {
+        this.nativeInternalID = nativeInternalID
+    }
 
-    override fun hashCode() : Int
+    actual fun equals(obj: Object) : Boolean {
+        if (obj !is KuzuInternalID) {
+            return false
+        }
+        return nativeInternalID.equals(obj.nativeInternalID)
+    }
 
-    override fun toString() : String
+    actual override fun hashCode() : Int {
+        return nativeInternalID.hashCode()
+    }
+
+    actual override fun toString() : String {
+        return nativeInternalID.toString()
+    }
 }

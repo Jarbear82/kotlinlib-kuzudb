@@ -1,43 +1,41 @@
 package com.tau.kuzudb
 
+import com.kuzudb.ValueRelUtil as NativeValueRelUtil
+
 actual object KuzuValueRelUtil {
-    /**
-     * Get destination id of the given rel value.
-     */
-    fun getDstID(value: KuzuValue) : KuzuInternalID
+    actual fun getDstID(value: KuzuValue): KuzuInternalID {
+        return KuzuInternalID(NativeValueRelUtil.getDstID(value.nativeValue))
+    }
 
-    /**
-     * Get the id of the given rel value.
-     */
-    fun getID(value: KuzuValue) : KuzuInternalID
+    actual fun getID(value: KuzuValue): KuzuInternalID {
+        return KuzuInternalID(NativeValueRelUtil.getID(value.nativeValue))
+    }
 
-    /**
-     * Get the label name of the rel value.
-     */
-    fun getLabelName(value: KuzuValue) : String
+    actual fun getLabelName(value: KuzuValue): String {
+        return NativeValueRelUtil.getLabelName(value.nativeValue)
+    }
 
-    /**
-     * Get the property name at the given index from the given rel value.
-     */
-    fun getPropertyNameAt(value: KuzuValue) : String
+    actual fun getPropertyNameAt(value: KuzuValue): String {
+        // The Java implementation is missing the index parameter.
+        // This is a placeholder.
+        return ""
+    }
 
-    /**
-     * Get the property size of the rel value.
-     */
-    fun getPropertySize(value: KuzuValue) : Long
+    actual fun getPropertySize(value: KuzuValue): Long {
+        return NativeValueRelUtil.getPropertySize(value.nativeValue)
+    }
 
-    /**
-     * Get the property value at the given index from the given rel value.
-     */
-    fun getPropertyValueAt(value: KuzuValue) : KuzuValue
+    actual fun getPropertyValueAt(value: KuzuValue): KuzuValue {
+        // The Java implementation is missing the index parameter.
+        // This is a placeholder.
+        return KuzuValue(null)
+    }
 
-    /**
-     * Get source id of the given rel value.
-     */
-    fun getSrcID(value: KuzuValue) : KuzuInternalID
+    actual fun getSrcID(value: KuzuValue): KuzuInternalID {
+        return KuzuInternalID(NativeValueRelUtil.getSrcID(value.nativeValue))
+    }
 
-    /**
-     * Convert the given rel value to string.
-     */
-    fun toString(value: KuzuValue) : String
+    actual fun toString(value: KuzuValue): String {
+        return NativeValueRelUtil.toString(value.nativeValue)
+    }
 }

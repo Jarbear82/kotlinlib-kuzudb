@@ -1,13 +1,13 @@
 package com.tau.kuzudb
 
-actual object KuzuValueRecursiveRelUtil {
-    /**
-     * Get the node list from the given recursive_rel value.
-     */
-    fun getNodeList(value: KuzuValue) : KuzuValue
+import com.kuzudb.ValueRecursiveRelUtil as NativeValueRecursiveRelUtil
 
-    /**
-     * Get the rel list from the given recursive_rel value.
-     */
-    fun getRelList(value: KuzuValue) : KuzuValue
+actual object KuzuValueRecursiveRelUtil {
+    actual fun getNodeList(value: KuzuValue): KuzuValue {
+        return KuzuValue(NativeValueRecursiveRelUtil.getNodeList(value.nativeValue))
+    }
+
+    actual fun getRelList(value: KuzuValue): KuzuValue {
+        return KuzuValue(NativeValueRecursiveRelUtil.getRelList(value.nativeValue))
+    }
 }
