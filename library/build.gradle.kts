@@ -1,4 +1,3 @@
-import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -25,6 +24,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(libs.kuzu)
+                implementation(libs.kotlinx.coroutines.core)
             }
         }
         val commonTest by getting {
@@ -37,6 +37,7 @@ kotlin {
 
         }
         val javaSharedTest by creating {
+            dependsOn(commonTest)
             dependencies {
                 implementation(libs.kotlin.test)
                 implementation(libs.junit)
@@ -62,6 +63,14 @@ kotlin {
         val androidMain by getting {
             dependsOn(javaSharedMain)
         }
+
+        targets.all {
+            compilations.all {
+                compilerOptions.configure {
+                    freeCompilerArgs.add("-Xexpect-actual-classes")
+                }
+            }
+        }
     }
 }
 
@@ -78,7 +87,7 @@ android {
 }
 
 mavenPublishing {
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    publishToMavenCentral()
 
     signAllPublications()
 
