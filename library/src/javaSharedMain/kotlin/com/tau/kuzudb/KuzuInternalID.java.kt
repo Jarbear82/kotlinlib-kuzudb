@@ -10,11 +10,11 @@ actual class KuzuInternalID {
         this.nativeInternalID = nativeInternalID
     }
 
-    actual fun equals(obj: Object) : Boolean {
-        if (obj !is KuzuInternalID) {
+    actual override fun equals(other: Any?): Boolean {
+        if (other !is KuzuInternalID) {
             return false
         }
-        return nativeInternalID.equals(obj.nativeInternalID)
+        return nativeInternalID.equals(other.nativeInternalID)
     }
 
     actual override fun hashCode() : Int {
