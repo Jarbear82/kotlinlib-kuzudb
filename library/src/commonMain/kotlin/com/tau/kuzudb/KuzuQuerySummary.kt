@@ -14,6 +14,6 @@ expect class KuzuQuerySummary {
     /**
      * Get the execution time of the query.
      */
-    fun getExecutionTime()
+    fun getExecutionTime(): Double
 
 }

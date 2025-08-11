@@ -13,7 +13,7 @@ expect class KuzuQueryResult : AutoCloseable, Iterator<KuzuTuple> {
     /**
      * Get the column data type at the given index.
      */
-    fun getColumnByDataType(index: Long)
+    fun getColumnDataType(index: Long): KuzuDataType
 
     /**
      * Get the column name at the given index.

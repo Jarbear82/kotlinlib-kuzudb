@@ -9,7 +9,7 @@ expect class KuzuTuple() : AutoCloseable {
 
     override fun close()
 
-    fun getValue(index: Long)
+    fun getValue(index: Long): KuzuValue
 
     override fun toString() : String
 }

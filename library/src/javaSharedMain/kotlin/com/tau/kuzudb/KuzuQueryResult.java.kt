@@ -9,8 +9,8 @@ actual class KuzuQueryResult(
 
     actual override fun close() = nativeResult.close()
 
-    actual fun getColumnByDataType(index: Long) {
-        nativeResult.getColumnDataType(index)
+    actual fun getColumnDataType(index: Long): KuzuDataType {
+        return KuzuDataType(nativeResult.getColumnDataType(index))
     }
 
     actual fun getColumnName(index: Long): String = nativeResult.getColumnName(index)
@@ -19,7 +19,8 @@ actual class KuzuQueryResult(
 
     actual fun getNext(): KuzuTuple = KuzuTuple(nativeResult.next)
 
-    actual fun getNextQueryResult(): KuzuQueryResult = KuzuQueryResult(nativeResult.nextQueryResult)
+    actual fun getNextQueryResult(): KuzuQueryResult =
+        KuzuQueryResult(nativeResult.nextQueryResult)
 
     actual fun getNumColumns(): Long = nativeResult.numColumns
 

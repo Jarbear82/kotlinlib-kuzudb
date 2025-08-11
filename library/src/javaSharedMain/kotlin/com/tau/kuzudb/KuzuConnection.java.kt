@@ -1,6 +1,5 @@
 package com.tau.kuzudb
 
-import com.tau.kuzudb.KuzuValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -14,18 +13,20 @@ actual class KuzuConnection actual constructor(database: KuzuDatabase) : AutoClo
         nativeConnection.close()
     }
 
-    actual fun getMaxNumThreadForExec() : Long {
+    actual fun getMaxNumThreadForExec(): Long {
         try {
             return nativeConnection.maxNumThreadForExec
-        }
-        catch (e: RuntimeException) {
+        } catch (e: RuntimeException) {
             throw KuzuException(e.message ?: "Unknown Kuzu Connection Error", e)
         }
-
     }
 
     actual fun setMaxNumThreadForExec(numThreads: Long) {
-        nativeConnection.maxNumThreadForExec = numThreads
+        try {
+            nativeConnection.maxNumThreadForExec = numThreads
+        } catch (e: RuntimeException) {
+            throw KuzuException(e.message ?: "Unknown Kuzu Connection Error", e)
+        }
     }
 
     actual suspend fun query(queryStr: String): KuzuQueryResult {
@@ -33,7 +34,7 @@ actual class KuzuConnection actual constructor(database: KuzuDatabase) : AutoClo
             try {
                 val nativeResult = nativeConnection.query(queryStr)
                 KuzuQueryResult(nativeResult)
-            } catch (e: KuzuException) {
+            } catch (e: RuntimeException) {
                 throw KuzuException(e.message ?: "Unknown Kuzu query error", e)
             }
         }
@@ -43,20 +44,24 @@ actual class KuzuConnection actual constructor(database: KuzuDatabase) : AutoClo
         return KuzuPreparedStatement(nativeConnection.prepare(queryStr))
     }
 
-    actual suspend fun execute(preparedStatement: KuzuPreparedStatement, params: Map<String, KuzuValue>): KuzuQueryResult {
+    actual suspend fun execute(
+        preparedStatement: KuzuPreparedStatement,
+        params: Map<String, KuzuValue>
+    ): KuzuQueryResult {
         return withContext(Dispatchers.IO) {
             try {
                 val nativeParams = params.mapValues { it.value.nativeValue }
-                val nativeResult = nativeConnection.execute(preparedStatement.nativeStatement, nativeParams)
+                val nativeResult =
+                    nativeConnection.execute(preparedStatement.nativeStatement, nativeParams)
                 KuzuQueryResult(nativeResult)
-            } catch (e: KuzuException) {
+            } catch (e: RuntimeException) {
                 throw KuzuException(e.message ?: "Unknown Kuzu query error", e)
             }
         }
     }
 
     actual fun interrupt() {
-        try{
+        try {
             nativeConnection.interrupt()
         } catch (e: RuntimeException) {
             throw KuzuException(e.message ?: "Unknown Kuzu Connection Error", e)

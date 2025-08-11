@@ -6,6 +6,7 @@ actual class KuzuQuerySummary {
     internal constructor(nativeSummary: com.kuzudb.QuerySummary) {
         this.nativeSummary = nativeSummary
     }
+
     /**
      * Construct a new query summary.
      */
@@ -21,7 +22,7 @@ actual class KuzuQuerySummary {
     /**
      * Get the execution time of the query.
      */
-    actual fun getExecutionTime() {
-        nativeSummary.executionTime
+    actual fun getExecutionTime(): Double {
+        return nativeSummary.executionTime
     }
 }
