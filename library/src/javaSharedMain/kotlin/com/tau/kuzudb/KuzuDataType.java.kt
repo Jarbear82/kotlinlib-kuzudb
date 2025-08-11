@@ -7,7 +7,7 @@ actual class KuzuDataType : AutoCloseable {
     internal val nativeDataType: DataType
 
     // Private constructor for internal wrapping
-    private constructor(nativeDataType: DataType) {
+    internal constructor(nativeDataType: DataType) {
         this.nativeDataType = nativeDataType
     }
 

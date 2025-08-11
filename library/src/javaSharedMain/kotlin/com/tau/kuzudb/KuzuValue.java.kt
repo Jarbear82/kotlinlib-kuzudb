@@ -47,7 +47,7 @@ actual class KuzuValue : AutoCloseable {
     }
 
     actual fun <T> getValue(): T {
-        return nativeValue.value as T
+        return nativeValue.getValue() as T
     }
 
     actual fun isNull(): Boolean {

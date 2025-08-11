@@ -8,6 +8,11 @@ actual class KuzuTuple : AutoCloseable {
     internal constructor(nativeTuple: FlatTuple) {
         this.nativeTuple = nativeTuple
     }
+
+    actual constructor() {
+        this.nativeTuple = FlatTuple()
+    }
+
     actual override fun close() {
         nativeTuple.close()
     }
