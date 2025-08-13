@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "io.github.jarbear82"
-version = "0.0.2"
+version = "0.0.3"
 
 kotlin {
     jvm()
