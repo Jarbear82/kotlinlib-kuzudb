@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "io.github.jarbear82"
-version = "0.0.1"
+version = "0.0.2"
 
 kotlin {
     jvm()
@@ -99,7 +99,7 @@ mavenPublishing {
         name = "KuzuDB-Kotlin"
         description = "A Kotlin Multiplatform library for KuzuDB."
         inceptionYear = "2024"
-        url = "https://github.com/jarbear82/kotlinlib-kuzudb/"
+        url = "https://github.com/jarbear82/kuzudb-kt/"
         licenses {
             license {
                 name = "The Apache License, Version 2.0"
@@ -115,9 +115,9 @@ mavenPublishing {
             }
         }
         scm {
-            url = "https://github.com/jarbear82/kotlinlib-kuzudb/"
-            connection = "scm:git:git://github.com/jarbear82/kotlinlib-kuzudb.git"
-            developerConnection = "scm:git:ssh://git@github.com/jarbear82/kotlinlib-kuzudb.git"
+            url = "https://github.com/jarbear82/kuzudb.kt/"
+            connection = "scm:git:git://github.com/jarbear82/kuzudb-kt.git"
+            developerConnection = "scm:git:ssh://git@github.com/jarbear82/kuzudb-kt.git"
         }
     }
 }
