@@ -16,6 +16,7 @@ actual enum class KuzuDataTypeID(internal val nativeType: DataTypeID) {
     DOUBLE(DataTypeID.DOUBLE),
     FLOAT(DataTypeID.FLOAT),
     INT128(DataTypeID.INT128),
+    INT64(DataTypeID.INT64),
     INT16(DataTypeID.INT16),
     INT32(DataTypeID.INT32),
     INT8(DataTypeID.INT8),
