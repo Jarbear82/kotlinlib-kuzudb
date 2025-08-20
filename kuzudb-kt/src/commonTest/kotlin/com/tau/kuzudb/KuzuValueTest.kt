@@ -40,6 +40,7 @@ class KuzuValueTest {
         val kuzuList = KuzuList(list)
         assertEquals(2, kuzuList.getListSize())
         assertEquals(1L, kuzuList.getListElement(0).getValue())
+        assertEquals(2L, kuzuList.getListElement(1).getValue())
     }
 
     @Test

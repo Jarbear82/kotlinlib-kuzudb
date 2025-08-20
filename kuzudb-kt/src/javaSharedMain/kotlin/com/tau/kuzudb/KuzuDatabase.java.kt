@@ -9,26 +9,42 @@ actual class KuzuDatabase : AutoCloseable {
     internal val nativeDatabase: Database
 
     actual constructor() {
-        nativeDatabase = Database()
+        try {
+            nativeDatabase = Database()
+        } catch (e: RuntimeException) {
+            throw KuzuException(e.message ?: "Unknown Kuzu Database Error", e)
+        }
     }
 
     actual constructor(path: String) {
-        nativeDatabase = Database(path)
+        try {
+            nativeDatabase = Database(path)
+        } catch (e: RuntimeException) {
+            throw KuzuException(e.message ?: "Unknown Kuzu Database Error", e)
+        }
     }
 
     actual constructor(config: KuzuDatabaseConfig) {
-        nativeDatabase = Database(
-            config.databasePath,
-            config.bufferPoolSize,
-            config.enableCompression,
-            config.readOnly,
-            config.maxDBSize,
-            config.autoCheckpoint,
-            config.checkpointThreshold
-        )
+        try {
+            nativeDatabase = Database(
+                config.databasePath,
+                config.bufferPoolSize,
+                config.enableCompression,
+                config.readOnly,
+                config.maxDBSize,
+                config.autoCheckpoint,
+                config.checkpointThreshold
+            )
+        } catch (e: RuntimeException) {
+            throw KuzuException(e.message ?: "Unknown Kuzu Database Error", e)
+        }
     }
 
     actual override fun close() {
-        nativeDatabase.close()
+        try {
+            nativeDatabase.close()
+        } catch (e: RuntimeException) {
+            throw KuzuException(e.message ?: "Unknown Kuzu Database Error", e)
+        }
     }
 }
