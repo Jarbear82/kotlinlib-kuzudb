@@ -12,7 +12,7 @@ package com.tau.kuzudb
  * @property checkpointThreshold The threshold of the WAL file size in bytes. When the size of the WAL file exceeds this threshold, the database will checkpoint if autoCheckpoint is true.
  */
 data class KuzuDatabaseConfig(
-    val databasePath: String?,
+    val databasePath: String = ":memory:",
     val bufferPoolSize: Long = 1024L,
     val enableCompression: Boolean = true,
     val readOnly: Boolean = false,

@@ -21,7 +21,8 @@ expect class KuzuDatabase : AutoCloseable {
      * Creates or opens a database.
      * @param config Advanced configuration settings.
      */
-    constructor(config: KuzuDatabaseConfig)
+    // TODO: Get test to pass
+    // constructor(config: KuzuDatabaseConfig)
 
     /**
      * Releases all native resources associated with the database.

@@ -36,26 +36,31 @@ class KuzuValueTest {
 
     @Test
     fun testListValue() {
-        val list = KuzuValue(listOf(1, 2))
+        val list= arrayOf(KuzuValue(1), KuzuValue(2))
         val kuzuList = KuzuList(list)
         assertEquals(2, kuzuList.getListSize())
-        assertEquals(1L, kuzuList.getListElement(0).getValue())
-        assertEquals(2L, kuzuList.getListElement(1).getValue())
+        assertEquals(1, kuzuList.getListElement(0).getValue())
+        assertEquals(2, kuzuList.getListElement(1).getValue())
     }
 
     @Test
     fun testMapValue() {
-        val map = KuzuValue(mapOf("a" to 1, "b" to 2))
-        val kuzuMap = KuzuMap(map)
+        val mapKeys : Array<KuzuValue> = arrayOf(KuzuValue("a"), KuzuValue("b"))
+        val mapValues : Array<KuzuValue> = arrayOf(KuzuValue(1), KuzuValue(2))
+        val kuzuMap = KuzuMap(mapKeys, mapValues)
         assertEquals(2, kuzuMap.getNumFields())
-        assertEquals(1L, kuzuMap.getValue(0).getValue())
+        assertEquals(1, kuzuMap.getValue(0).getValue())
+        assertEquals(2, kuzuMap.getValue(1).getValue())
     }
 
     @Test
     fun testStructValue() {
-        val struct = KuzuValue(mapOf("a" to 1, "b" to 2))
-        val kuzuStruct = KuzuStruct(struct)
-        assertEquals(2, kuzuStruct.getNumFields())
-        assertEquals(1L, kuzuStruct.getValueByIndex(0).getValue())
+        val fieldNames = arrayOf("name", "age", "gender")
+        val fieldValues = arrayOf(KuzuValue("John"), KuzuValue(12), KuzuValue("Male") )
+        val kuzuStruct = KuzuStruct(fieldNames, fieldValues)
+        assertEquals(3, kuzuStruct.getNumFields())
+        assertEquals("John", kuzuStruct.getValueByIndex(0).getValue())
+        assertEquals(12, kuzuStruct.getValueByIndex(1).getValue())
+        assertEquals("Male", kuzuStruct.getValueByIndex(2).getValue())
     }
 }

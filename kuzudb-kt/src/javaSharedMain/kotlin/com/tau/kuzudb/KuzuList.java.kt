@@ -17,6 +17,8 @@ actual class KuzuList : AutoCloseable {
         this.nativeList = NativeKuzuList(values.map { it.nativeValue }.toTypedArray())
     }
 
+
+
     internal constructor(nativeList: NativeKuzuList) {
         this.nativeList = nativeList
     }

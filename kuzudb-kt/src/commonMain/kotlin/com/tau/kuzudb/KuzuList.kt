@@ -7,6 +7,8 @@ expect class KuzuList : AutoCloseable {
 
     constructor(values: Array<KuzuValue>)
 
+
+
     override fun close()
 
     fun getListElement(index: Long) : KuzuValue

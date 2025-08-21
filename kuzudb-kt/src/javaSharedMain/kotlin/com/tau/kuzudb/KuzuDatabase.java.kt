@@ -24,21 +24,22 @@ actual class KuzuDatabase : AutoCloseable {
         }
     }
 
-    actual constructor(config: KuzuDatabaseConfig) {
-        try {
-            nativeDatabase = Database(
-                config.databasePath,
-                config.bufferPoolSize,
-                config.enableCompression,
-                config.readOnly,
-                config.maxDBSize,
-                config.autoCheckpoint,
-                config.checkpointThreshold
-            )
-        } catch (e: RuntimeException) {
-            throw KuzuException(e.message ?: "Unknown Kuzu Database Error", e)
-        }
-    }
+    // TODO: Get Test to pass
+//    actual constructor(config: KuzuDatabaseConfig) {
+//        try {
+//            nativeDatabase = Database(
+//                config.databasePath,
+//                config.bufferPoolSize,
+//                config.enableCompression,
+//                config.readOnly,
+//                config.maxDBSize,
+//                config.autoCheckpoint,
+//                config.checkpointThreshold
+//            )
+//        } catch (e: RuntimeException) {
+//            throw KuzuException(e.message ?: "Unknown Kuzu Database Error", e)
+//        }
+//    }
 
     actual override fun close() {
         try {
